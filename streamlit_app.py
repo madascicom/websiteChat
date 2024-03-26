@@ -8,7 +8,7 @@ st.title('Ce workshop AI ți se potrivește?')
 WEBHOOK_URL = st.secrets["webhook_url"]
 
 # Input for messages
-message = st.text_input("Scrie mai jos ⬇️ la ce anume vrei să folosești AI-ul. Îți va răspunde un AI antrenat pe conținutul workshopurilor de AI de pe comunicarestiintifica.ro.")
+message = st.text_input("Scrie mai jos ⬇️ la ce anume vrei să folosești AI-ul. Îți va răspunde un AI antrenat pe conținutul workshopurilor de inteligență artificială cu o recomandare pentru cel mai potrivit workshop pentru tine..")
 
 # Container to display responses
 response_container = st.empty()

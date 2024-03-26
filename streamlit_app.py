@@ -4,6 +4,9 @@ import asyncio
 
 st.title('🎈 Simple Chat App')
 
+# Retrieve webhook URL from Streamlit secrets
+WEBHOOK_URL = st.secrets["webhook_url"]
+
 # Input for messages
 message = st.text_input("Enter your message:")
 
@@ -13,7 +16,7 @@ response_container = st.empty()
 # Asynchronous function to call the webhook
 async def call_webhook(message):
     async with httpx.AsyncClient() as client:
-        response = await client.post('YOUR_WEBHOOK_URL', json={"message": message})
+        response = await client.post(WEBHOOK_URL, json={"message": message})
         return response.json()
 
 # Function to handle sending messages

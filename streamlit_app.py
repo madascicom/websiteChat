@@ -24,19 +24,20 @@ async def call_webhook(message):
 
 # Function to handle sending messages
 def send_message():
-    response_container.text("Sending message...")
-
-    # Workaround for Streamlit's lack of direct asyncio support
+    response_container.markdown("Sending message...")
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
 
-    # Call the webhook and wait for the response
-    response = loop.run_until_complete(call_webhook(message))
+    try:
+        # Call the webhook and wait for the response
+        response = loop.run_until_complete(call_webhook(message))
 
-# Update the UI with the response using Markdown for better text wrapping
-response_container.markdown(response.get("response", "No response"))
-
-
+        # Ensure the 'response' variable is directly used after its definition
+        # Update the UI with the response using Markdown for better text wrapping
+        response_container.markdown(response.get("response", "No response"))
+    except Exception as e:
+        # Handle exceptions and display an error message
+        response_container.markdown(f"An error occurred: {str(e)}")
 
 if st.button("Send"):
     send_message()

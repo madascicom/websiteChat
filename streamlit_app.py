@@ -33,8 +33,8 @@ def send_message():
     # Call the webhook and wait for the response
     response = loop.run_until_complete(call_webhook(message))
 
-    # Update the UI with the response
-    response_container.text(response.get("response", "No response"))
+# Update the UI with the response, using text_area for wrapping and a scrollbar if necessary
+response_container.text_area("Response", response.get("response", "No response"), height=150)
 
 if st.button("Send"):
     send_message()

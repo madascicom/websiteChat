@@ -10,28 +10,31 @@ WEBHOOK_URL = st.secrets["webhook_url"]
 # Input for messages
 message = st.text_input("Enter your message:")
 
-# Container to display responses, using text_area for better wrapping
+# Container to display responses
 response_container = st.empty()
 
 # Asynchronous function to call the webhook with a custom timeout
 async def call_webhook(message):
-    # Set a custom timeout (e.g., 120 seconds)
-    timeout = httpx.Timeout(120.0, connect=180.0)
+    # Set a custom timeout (e.g., 30 seconds)
+    # The timeout can be a float or int and represents the number of seconds to wait before timing out
+    timeout = httpx.Timeout(60.0, connect=60.0)
     async with httpx.AsyncClient(timeout=timeout) as client:
         response = await client.post(WEBHOOK_URL, json={"message": message})
         return response.json()
 
 # Function to handle sending messages
-async def send_message():
-    # Call the webhook and wait for the response
-    answer = await call_webhook(message)
-    
-    # Update the UI with the response using text_area for better wrapping
-    response_container.text_area("Response:", answer.get("response", "No response"), height=200)
+def send_message():
+    response_container.text("Sending message...")
 
-# Button to send the message
+    # Workaround for Streamlit's lack of direct asyncio support
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
+    # Call the webhook and wait for the response
+    response = loop.run_until_complete(call_webhook(message))
+
+    # Update the UI with the response
+    response_container.text(response.get("response", "No response"))
+
 if st.button("Send"):
-    # Display a placeholder while waiting for the response
-    with st.spinner("Waiting for response..."):
-        # Use Streamlit's run_in_thread method to run the async function without blocking
-        st.experimental_singleton(send_message)
+    send_message()

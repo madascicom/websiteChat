@@ -11,7 +11,7 @@ WEBHOOK_URL = st.secrets["webhook_url"]
 message = st.text_input("Enter your message:")
 
 # Container to display responses
-response_container = st.empty()
+response_container = st.text_area.empty()
 
 # Asynchronous function to call the webhook with a custom timeout
 async def call_webhook(message):
@@ -24,7 +24,7 @@ async def call_webhook(message):
 
 # Function to handle sending messages
 def send_message():
-    response_container.text_area("Sending message...")
+    response_container.text("Sending message...")
 
     # Workaround for Streamlit's lack of direct asyncio support
     loop = asyncio.new_event_loop()
@@ -34,7 +34,7 @@ def send_message():
     response = loop.run_until_complete(call_webhook(message))
 
     # Update the UI with the response
-    response_container.text_area(response.get("response", "No response"), height=150)
+    response_container.text(response.get("response", "No response"))
 
 
 if st.button("Send"):

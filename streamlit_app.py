@@ -2,13 +2,13 @@ import streamlit as st
 import httpx
 import asyncio
 
-st.title('📡 Mă poate ajuta workshopul de AI cu...')
+st.title('❓ Mă poate ajuta cursul AI cu...')
 
 # Retrieve webhook URL from Streamlit secrets
 WEBHOOK_URL = st.secrets["webhook_url"]
 
 # Input for messages
-message = st.text_input("Scrie aici cu ce ți-ai dori ajutor în munca academică")
+message = st.text_input("Scrie aici cu ce ți-ai dori ajutor de la AI în munca academică")
 
 # Container to display responses
 response_container = st.empty()

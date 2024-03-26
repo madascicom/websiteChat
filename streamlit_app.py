@@ -17,7 +17,7 @@ response_container = st.empty()
 async def call_webhook(message):
     # Set a custom timeout (e.g., 30 seconds)
     # The timeout can be a float or int and represents the number of seconds to wait before timing out
-    timeout = httpx.Timeout(60.0, connect=60.0)
+    timeout = httpx.Timeout(60.0)
     async with httpx.AsyncClient(timeout=timeout) as client:
         response = await client.post(WEBHOOK_URL, json={"message": message})
         return response.json()

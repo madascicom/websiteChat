@@ -1,6 +1,6 @@
-# 📦 Streamlit App Starter Kit 
+# Chat with my website
 ```
-⬆️ (Replace above with your app's name)
+
 ```
 
 Description of the app ...

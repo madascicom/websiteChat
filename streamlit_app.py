@@ -33,8 +33,9 @@ def send_message():
     # Call the webhook and wait for the response
     response = loop.run_until_complete(call_webhook(message))
 
-    # Update the UI with the response
-    response_container.text(response.get("response", "No response"))
+# Update the UI with the response using Markdown for better text wrapping
+response_container.markdown(response.get("response", "No response"))
+
 
 
 if st.button("Send"):

@@ -13,9 +13,12 @@ message = st.text_input("Enter your message:")
 # Container to display responses
 response_container = st.empty()
 
-# Asynchronous function to call the webhook
+# Asynchronous function to call the webhook with a custom timeout
 async def call_webhook(message):
-    async with httpx.AsyncClient() as client:
+    # Set a custom timeout (e.g., 30 seconds)
+    # The timeout can be a float or int and represents the number of seconds to wait before timing out
+    timeout = httpx.Timeout(30.0, connect=60.0)
+    async with httpx.AsyncClient(timeout=timeout) as client:
         response = await client.post(WEBHOOK_URL, json={"message": message})
         return response.json()
 

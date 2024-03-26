@@ -11,7 +11,7 @@ WEBHOOK_URL = st.secrets["webhook_url"]
 message = st.text_input("Enter your message:")
 
 # Container to display responses
-response_container = st.text_area.empty()
+response_container = st.empty()
 
 # Asynchronous function to call the webhook with a custom timeout
 async def call_webhook(message):
